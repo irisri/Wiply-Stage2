@@ -1,12 +1,8 @@
-<section>
-  <table>
-    <tr *ngFor="let row of squares">
-      <td
-        *ngFor="let square of row"
-        (click)="onChangeRandomColor(square.id, $event)"
-      >
-        <game-square [id]="square.id" [color]="square.color"></game-square>
-      </td>
-    </tr>
-  </table>
+<section class="grid">
+  <div
+    *ngFor="let square of squareListFromDB"
+    (click)="onChangeColorDB(square.id, squareListFromDB, $event)"
+  >
+    <game-square [id]="square.id" [color]="square.color"></game-square>
+  </div>
 </section>

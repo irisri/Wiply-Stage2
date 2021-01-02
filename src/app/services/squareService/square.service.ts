@@ -1,40 +1,45 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+// import { Observable, of } from 'rxjs';
+// import { map } from 'rxjs/operators';
 
-import { SQUARES } from '../../db';
+import { AngularFirestore } from '@angular/fire/firestore';
+
+import { Square } from '../../Square';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SquareService {
-  constructor() {}
+  public squaresFromDB: Square[];
+  private readonly observableSquaresDao;
 
-  public getSquares(): Observable<any[]> {
-    return of(SQUARES);
+  constructor(private firestoreDB: AngularFirestore) {
+    this.observableSquaresDao = firestoreDB
+      .collection('squares')
+      .snapshotChanges();
   }
 
-  public getRandomColor(id: number): void {
-    let _squares = [];
-    this.getSquares().subscribe((squares) => (_squares = squares));
-    const colorMap = this._getColorMap(_squares);
+  public getObservableSquaresDao() {
+    return this.observableSquaresDao;
+  }
+
+  private _updateSquare(id: number, color: string) {
+    return this.firestoreDB.doc('squares/' + id).update({ color });
+  }
+
+  public saveRandomColorToDB(id: number, squaresList: Square[]) {
     let color = this._generateRandomColor();
-    const indexes = this._getSquareById(id);
+    const colorMap = this._getColorMap(squaresList);
     while (!colorMap[color] === undefined) {
       color = this._generateRandomColor();
     }
-    let square = _squares[indexes[0]][indexes[1]];
-    square.color = color;
+    this._updateSquare(id, color);
+    console.log(color);
   }
 
-  private _getColorMap(squares: any[]): Map<string, boolean> {
+  private _getColorMap(squares: Square[]): Map<string, boolean> {
     let colorsMap = new Map();
-    let allSquares = [];
-    squares.forEach((row) => {
-      row.forEach((square) => allSquares.push(square));
-    });
-    allSquares.forEach((square) => {
-      colorsMap[square.color] = true;
-    });
+    squares.forEach((square) => (colorsMap[square.color] = true));
     return colorsMap;
   }
 
@@ -45,39 +50,5 @@ export class SquareService {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
-  }
-
-  private _getSquareById(id: number): any[] {
-    let indexes = [];
-    switch (id) {
-      case 1:
-        indexes.push(0, 0);
-        break;
-      case 2:
-        indexes.push(0, 1);
-        break;
-      case 3:
-        indexes.push(0, 2);
-        break;
-      case 4:
-        indexes.push(1, 0);
-        break;
-      case 5:
-        indexes.push(1, 1);
-        break;
-      case 6:
-        indexes.push(1, 2);
-        break;
-      case 7:
-        indexes.push(2, 0);
-        break;
-      case 8:
-        indexes.push(2, 1);
-        break;
-      case 9:
-        indexes.push(2, 2);
-        break;
-    }
-    return indexes;
   }
 }

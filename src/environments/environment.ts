@@ -3,7 +3,16 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  firebase: {
+    apiKey: 'AIzaSyAkB91ICU8oApyBoiJRha5ESFvy3m5hgH4',
+    authDomain: 'wiply-4a1ee.firebaseapp.com',
+    projectId: 'wiply-4a1ee',
+    storageBucket: 'wiply-4a1ee.appspot.com',
+    messagingSenderId: '393597294978',
+    appId: '1:393597294978:web:6e36ec9fdb9b337a1fd79b',
+    measurementId: 'G-FJRXYZ3DH3',
+  },
 };
 
 /*
