@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
-// import { Observable, of } from 'rxjs';
-// import { map } from 'rxjs/operators';
-
 import { AngularFirestore } from '@angular/fire/firestore';
 
-import { Square } from '../../Square';
+import { Square } from '../../../models/Square';
 
 @Injectable({
   providedIn: 'root',
@@ -34,7 +31,6 @@ export class SquareService {
       color = this._generateRandomColor();
     }
     this._updateSquare(id, color);
-    console.log(color);
   }
 
   private _getColorMap(squares: Square[]): Map<string, boolean> {

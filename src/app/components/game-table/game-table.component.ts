@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Square } from '../../Square';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Square } from '../../../models/Square';
 import { Subscription } from 'rxjs';
 
 import { SquareService } from '../../services/squareService/square.service';
@@ -9,7 +9,7 @@ import { SquareService } from '../../services/squareService/square.service';
   templateUrl: './game-table.component.html',
   styleUrls: ['./game-table.component.css'],
 })
-export class GameTableComponent implements OnInit {
+export class GameTableComponent implements OnInit, OnDestroy {
   public squareListFromDB: Square[];
   public subscription: Subscription;
 
@@ -28,11 +28,10 @@ export class GameTableComponent implements OnInit {
       .getObservableSquaresDao()
       .subscribe((res) => {
         this.squareListFromDB = res.map((square) => {
-          let colorData = Object(square.payload.doc.data());
           return {
             id: +square.payload.doc.id,
-            color: colorData.color,
-          };
+            color: Object(square.payload.doc.data().color),
+          } as Square;
         });
       });
   }

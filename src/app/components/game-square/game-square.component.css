@@ -2,4 +2,6 @@ div {
   height: 100%;
   width: 100%;
   border: 1px solid black;
+  -webkit-box-shadow: 2px 2px 3px 2px #2f2f2f;
+  box-shadow: 2px 2px 3px 2px #2f2f2f;
 }

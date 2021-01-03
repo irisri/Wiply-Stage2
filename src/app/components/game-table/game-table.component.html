@@ -1,8 +1,9 @@
 <section class="grid">
-  <div
-    *ngFor="let square of squareListFromDB"
-    (click)="onChangeColorDB(square.id, squareListFromDB, $event)"
-  >
-    <game-square [id]="square.id" [color]="square.color"></game-square>
+  <div *ngFor="let square of squareListFromDB">
+    <game-square
+      [id]="square.id"
+      [color]="square.color"
+      (click)="onChangeColorDB(square.id, squareListFromDB, $event)"
+    ></game-square>
   </div>
 </section>

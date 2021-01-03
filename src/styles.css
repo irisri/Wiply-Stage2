@@ -1,8 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@font-face {
+  font-family: audiowide;
+  src: url("./assets/fonts/Audiowide-Regular.ttf");
+}
+
 * {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  font-family: audiowide, Arial, Helvetica;
 }
